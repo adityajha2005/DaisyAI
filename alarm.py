@@ -23,20 +23,13 @@ deletetime.truncate(0)
 deletetime.close()
 
 def ring(time):
-    currenttime = datetime.datetime.now().strftime("%H:%M:%S")  # Define currenttime here
-    timeset = str(time)
-    timenow = timeset.replace("daisy", "")
-    timenow = timeset.replace(" and ", "")
-    timenow = timenow.replace("set an alarm", "")
-    Alarmtime = str(timenow)
-    print(f"Alarm set for {Alarmtime}")
     while True:
-        if currenttime == datetime.datetime.now().strftime("%H:%M:%S"):
+        currenttime = datetime.datetime.now().strftime("%H:%M:%S")
+        if currenttime == time:
             speak("Wake up sir, It's time")
-            if currenttime == Alarmtime:
-                speak("Wake up sir, It's time")
-                os.startfile("music.mp3")
-            elif currenttime + "00:00:30" == Alarmtime:
-                exit()
+            os.startfile("music.mp3")
+            break  # End the loop once alarm time is reached
+        else:
+            continue
 
-ring(Time)
+ring(time)
