@@ -15,8 +15,7 @@ def speak(audio):
     engine.runAndWait()
 
 extractedtime = open("alarmtext.txt", "r")
-time = extractedtime.read()
-Time = str(time)
+time = extractedtime.read().strip()  # Remove trailing whitespaces
 extractedtime.close()
 
 deletetime = open("alarmtext.txt", "r+")
