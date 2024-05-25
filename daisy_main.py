@@ -3,6 +3,7 @@ import speech_recognition
 import requests 
 from bs4 import BeautifulSoup
 import datetime
+import os
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
 for voice in voices:
@@ -31,6 +32,14 @@ def takeCommand():
         print("Say that again")
         return "None"
     return query
+
+def alarm(query):
+    timehere = open("alarmtext.txt", "a")
+    timehere.write(query)
+    timehere.close()
+    speak(f"Alarm set for {query}")  # Speaking the time for the alarm
+    os.startfile("alarm.py")
+
 
 from GreetMe import greetMe
 
@@ -85,6 +94,14 @@ if __name__ == "__main__":
             data = BeautifulSoup(r.text,"html.parser")
             temp=data.find("div",class_="BNeawe").text
             speak(f"Temperature here is {temp}")
+
+        elif "set an alarm" in query:
+            print("Input time for alarm")
+            speak("Set the time")
+            a = input("Please tell me the time :- ")
+            alarm(a)
+            speak("Alarm set")
+
         
         elif "the time" in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
