@@ -1,45 +1,58 @@
 import pyttsx3
 import speech_recognition
-import requests 
+import requests
 from bs4 import BeautifulSoup
 import datetime
 import os
+import time  # Import time module for sleep function
+
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
 for voice in voices:
     if "zira" in voice.name.lower():
         engine.setProperty("voice", voice.id)
         break
-engine.setProperty("rate",170)
+engine.setProperty("rate", 170)
 
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
 
 def takeCommand():
-    r=speech_recognition.Recognizer()
+    r = speech_recognition.Recognizer()
     with speech_recognition.Microphone() as source:
         print("Listening...")
         r.pause_threshold = 1
         r.energy_threshold = 300
-        audio = r.listen(source,0,4)
+        audio = r.listen(source, 0, 4)
 
     try:
         print("Understanding..")
-        query = r.recognize_google(audio,language="en-in")
+        query = r.recognize_google(audio, language="en-in")
         print(f"You said : {query}\n")
     except Exception as e:
         print("Say that again")
         return "None"
     return query
 
-def alarm(query):
-    timehere = open("alarmtext.txt", "a")
-    timehere.write(query)
-    timehere.close()
-    speak(f"Alarm set for {query}")  # Speaking the time for the alarm
-    os.startfile("alarm.py")
+def ring_alarm(alarm_time):
+    while True:
+        current_time = datetime.datetime.now().strftime("%H:%M:%S")
+        if current_time == alarm_time.strftime("%H:%M:%S"):
+            speak("Wake up sir, It's time")
+            os.startfile("music.mp3")  # Start playing music
+            break
+        else:
+            time.sleep(1)  # Wait for 1 second before checking again
 
+def convert_to_datetime(alarm_time_str):
+    # Convert user input string to datetime object
+    try:
+        alarm_time = datetime.datetime.strptime(alarm_time_str, "%I:%M %p")
+    except ValueError:
+        speak("Invalid time format. Please provide time in HH:MM AM/PM format.")
+        return None
+    return alarm_time
 
 from GreetMe import greetMe
 
@@ -96,13 +109,17 @@ if __name__ == "__main__":
             speak(f"Temperature here is {temp}")
 
         elif "set an alarm" in query:
-            print("Input time for alarm")
-            speak("Set the time")
-            a = input("Please tell me the time :- ")
-            alarm(a)
+            print("Input time for alarm (HH:MM AM/PM)")
+            speak("Set the time for the alarm (HH:MM AM/PM)")
+            alarm_time_str = input("Please tell me the time (HH:MM AM/PM) :- ")
+            alarm_time = convert_to_datetime(alarm_time_str)
             speak("Alarm set")
+            if alarm_time:
+                ring_alarm(alarm_time)
+                os.startfile("music.mp3")
 
-        
+                
+
         elif "the time" in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
             speak(f"Sir, the time is {strTime}")
@@ -113,4 +130,3 @@ if __name__ == "__main__":
         
         elif "finally sleep" in query:
             speak("Going to sleep , sir")
-
