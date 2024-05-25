@@ -50,7 +50,7 @@ def convert_to_datetime(alarm_time_str):
     try:
         alarm_time = datetime.datetime.strptime(alarm_time_str, "%I:%M %p")
     except ValueError:
-        speak("Invalid time format. Please provide time in HH:MM AM/PM format.") #eg 5:47 PM
+        speak("Invalid time format. Please provide time in HH:MM AM/PM format.")
 
         return None
     return alarm_time
