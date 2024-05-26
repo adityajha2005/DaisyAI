@@ -7,6 +7,8 @@ import os
 import time  # Import time module for sleep function
 import pyautogui
 import keyboard
+import random
+import webbrowser
 
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
@@ -78,6 +80,17 @@ if __name__ == "__main__":
             speak("I can do a lot of things, Just tell me what you want me to do")
         elif "thank you" in query:
             speak("You are welcome, sir")
+
+        elif "tired" in query:
+            speak("Playing some music for you")
+            a=(1,2,3)
+            music = random.choice(a)
+            if music == 1:
+                webbrowser.open("https://www.youtube.com/watch?v=syFZfO_wfMQ")
+            elif music == 2:
+                webbrowser.open("https://youtu.be/JGwWNGJdvx8?si=eYFYvE5DoUjMZ6VR")
+            elif music == 3:
+                webbrowser.open("https://youtu.be/7wtfhZwyrcc?si=QZy2b1e6Q7m2lYb2")
 
         elif "pause" in query:
             pyautogui.press("k")
@@ -171,3 +184,15 @@ if __name__ == "__main__":
         
         elif "finally sleep" in query:
             speak("Going to sleep , sir")
+
+        elif "remember that" in query:
+            remembermessage = query.replace("remember", "")
+            remembermessage = query.replace("daisy", "")
+            remembermessage = query.replace("that", "")
+            speak("You asked me to remember that" + remembermessage)
+            Remember = open("data.txt", "a")
+            Remember.write(remembermessage)
+            Remember.close()
+        elif "what do you remember" in query:
+            Remember = open("data.txt", "r")
+            speak("You told me " + Remember.read())
