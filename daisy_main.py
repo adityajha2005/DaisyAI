@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 import datetime
 import os
 import time  # Import time module for sleep function
+import pyautogui
+import keyboard
 
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
@@ -77,6 +79,44 @@ if __name__ == "__main__":
         elif "thank you" in query:
             speak("You are welcome, sir")
 
+        elif "pause" in query:
+            pyautogui.press("k")
+            speak("Paused")
+        elif "play" in query:
+            pyautogui.press("k")
+            speak("Playing")
+        elif "next" in query:
+            pyautogui.press("l")
+            speak("Next")
+        elif "previous" in query:
+            pyautogui.press("j")
+            speak("Previous")
+        elif "mute" in query:
+            pyautogui.press("m")
+            speak("Muted")
+        elif "full screen" in query:
+            pyautogui.press("f")
+            speak("Full screen")
+        elif "exit full screen" in query:
+            pyautogui.press("esc")
+            speak("Exit full screen")
+        elif "forward" in query:
+            pyautogui.press("right")
+            speak("Forward")
+        elif "backward" in query:
+            pyautogui.press("left")
+            speak("Backward")
+        elif "volume up" in query:
+            from keyboard import volumeUp
+            volumeUp()
+            speak("Volume up")
+        elif "volume down" in query:
+            from keyboard import volumeDown
+            volumeDown()
+            speak("Volume down")
+    
+    
+        
         elif "open" in query:
             from Dictapp import openApp
             openApp(query)
