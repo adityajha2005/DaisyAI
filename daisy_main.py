@@ -12,6 +12,7 @@ import webbrowser
 import wolframalpha
 from plyer import notification
 from pygame import mixer
+import speedtest
 
 
 for(i) in range(3):
@@ -158,8 +159,13 @@ if __name__ == "__main__":
                             pyautogui.typewrite(query, interval=0.2)
                             pyautogui.press("enter")
                             speak(f"Opening {query}")
-
-
+                        
+                        elif "internet speed" in query:
+                            wifi = speedtest.Speedtest()
+                            download_speed = wifi.download()/1048576
+                            upload_speed = wifi.upload()/1048576
+                            speak(f"Download speed is {download_speed} Mbps and Upload speed is {upload_speed} Mbps")
+                            print(f"Download speed is {download_speed} Mbps and Upload speed is {upload_speed} Mbps")
 
 
                             
