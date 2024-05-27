@@ -159,6 +159,10 @@ if __name__ == "__main__":
             query = query.replace("Daisy", "")
             Calc(query)
             
+        elif "whatsapp" in query:
+            from Whatsapp import sendMessage
+            sendMessage()
+        
         elif "temperature" in query:
             search = "temperature here is "
             url=f"https://www.google.com/search?q={search}"
