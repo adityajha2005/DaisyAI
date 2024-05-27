@@ -9,6 +9,8 @@ import pyautogui
 import keyboard
 import random
 import webbrowser
+import wolframalpha
+
 
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
@@ -147,6 +149,16 @@ if __name__ == "__main__":
         elif "wikipedia" in query:
             from SearchNow import searchWikipedia
             searchWikipedia(query)
+        elif "news" in query:
+            from newsread import latest_news
+            latest_news()
+        elif "calculate" in query:
+            from Calculatenumbers import WolfRamAlpha
+            from Calculatenumbers import Calc
+            query = query.replace("calculate", "")
+            query = query.replace("Daisy", "")
+            Calc(query)
+            
         elif "temperature" in query:
             search = "temperature here is "
             url=f"https://www.google.com/search?q={search}"
