@@ -10,6 +10,9 @@ import keyboard
 import random
 import webbrowser
 import wolframalpha
+from plyer import notification
+from pygame import mixer
+
 
 for(i) in range(3):
     a = input("Enter the password to open Daisy : ")
@@ -25,7 +28,7 @@ for(i) in range(3):
     elif(a!=pw):
         print("Incorrect password, Try again")
         continue
-    
+
 
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
@@ -81,17 +84,85 @@ from GreetMe import greetMe
 if __name__ == "__main__":
     while True:
         query = takeCommand().lower()
-        if "wake up daisy" in query:
+        if "wake up" in query:
             greetMe()
             
             while True:
                         query = takeCommand().lower()
                         if "sleep" in query:
                             speak("Ok sir, You can call me anytime")
-                            break
-                        elif "sleep daisy" in query:
-                            speak("Ok sir, You can call me anytime")
-                            break
+                            exit()
+                        elif "finally sleep" in query:
+                            speak("Going to sleep , sir")
+                            exit()
+
+
+                        elif "change password" in query:
+                            new_pw = input("Enter the new password: ")
+                            new_pw_file = open("password.txt", "w")
+                            new_pw_file.write(new_pw)
+                            new_pw_file.close()
+                            speak("Password changed successfully")
+                        
+                        elif "schedule my day" in query:
+                            tasks=[]
+                            speak("Do you want to clear old tasks")
+                            query = takeCommand().lower()
+                            if "yes" in query:
+                                file=open("tasks.txt","w")
+                                file.write("")
+                                file.close()
+                                speak("Old tasks cleared")
+                                no_tasks = int(input("Enter the number of tasks you want to schedule: "))
+                                i=0
+                                for i in range(no_tasks):
+                                    task = input(f"Enter task {i+1}: ")
+                                    tasks.append(task)
+                                    file=open("tasks.txt","a")
+                                    file.write(task)
+                                    file.write("\n")
+                                    file.close()
+                            elif "no" in query:
+                                no_tasks = int(input("Enter the number of tasks you want to schedule: "))
+                                for i in range(no_tasks):
+                                    task = input(f"Enter task {i+1}: ")
+                                    tasks.append(task)
+                                    file=open("tasks.txt","a")
+                                    file.write(task)
+                                    file.write("\n")
+                                    file.close()
+                            speak("Tasks scheduled successfully")
+                            file=open("tasks.txt","r")
+                            speak("Your tasks for today are")
+                            print(file.read())
+                            speak(file.read())
+                            file.close()
+                        elif "show my schedule" in query:
+                            file=open("tasks.txt","r")
+                            content=file.read()
+                            file.close()
+                            mixer.init()
+                            mixer.music.load("notification.mp3")
+                            mixer.music.play()
+                            notification.notify(
+                                title = "My schedule for today",
+                                message = content,
+                                timeout = 10
+                            )
+
+                        elif "open" in query:
+                            query = query.replace("open", "")
+                            query = query.replace("Daisy", "")
+                            query = query.replace("the", "")
+                            pyautogui.press("super")
+                            pyautogui.typewrite(query, interval=0.2)
+                            pyautogui.press("enter")
+                            speak(f"Opening {query}")
+
+
+
+
+                            
                         elif "hello" in query:
                             speak("Hello sir, How can I help you?")
                         elif "how are you" in query:
@@ -218,8 +289,7 @@ if __name__ == "__main__":
                             strDate = datetime.datetime.now().strftime("%d:%m:%Y")
                             speak(f"Sir, the date is {strDate}")
                         
-                        elif "finally sleep" in query:
-                            speak("Going to sleep , sir")
+                        
 
                         elif "remember that" in query:
                             remembermessage = query.replace("remember", "")
