@@ -13,6 +13,7 @@ import wolframalpha
 from plyer import notification
 from pygame import mixer
 import speedtest
+from pycricbuzz import Cricbuzz
 
 
 for(i) in range(3):
@@ -173,6 +174,12 @@ if __name__ == "__main__":
                             ping = wifi.results.ping
                             print(f"Ping is {ping} ms")
                             speak(f"Ping is {ping} ms")
+
+                        elif "cricket score" in query:
+                            from cricscore import cricscore
+                            cricscore() 
+                            
+
 
 
                             
