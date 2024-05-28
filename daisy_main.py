@@ -162,10 +162,17 @@ if __name__ == "__main__":
                         
                         elif "internet speed" in query:
                             wifi = speedtest.Speedtest()
+                            time.sleep(0.5)
+                            print("Calculating internet speed ")
                             download_speed = wifi.download()/1048576
+                            print(f"Download speed is {download_speed} Mbps")
+                            speak(f"Download speed is {download_speed} Mbps")
                             upload_speed = wifi.upload()/1048576
-                            speak(f"Download speed is {download_speed} Mbps and Upload speed is {upload_speed} Mbps")
-                            print(f"Download speed is {download_speed} Mbps and Upload speed is {upload_speed} Mbps")
+                            print(f"Upload speed is {upload_speed} Mbps")
+                            speak(f"Upload speed is {upload_speed} Mbps")
+                            ping = wifi.results.ping
+                            print(f"Ping is {ping} ms")
+                            speak(f"Ping is {ping} ms")
 
 
                             
