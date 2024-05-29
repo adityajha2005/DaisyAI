@@ -14,27 +14,31 @@ from plyer import notification
 from pygame import mixer
 import speedtest
 from pycricbuzz import Cricbuzz
+from tkinter import *
+from PIL import Image, ImageTk, ImageSequence
+import pygame
+from pygame import mixer
 
 
-for(i) in range(3):
-    a = input("Enter the password to open Daisy : ")
-    pw_file = open("password.txt", "r")
+for i in range(3):
+    a = input("Enter Password to open Jarvis :- ")
+    pw_file = open("password.txt","r")
     pw = pw_file.read()
     pw_file.close()
-    if (a == pw):
-        print("Welcome to Daisy, Speak [WAKE UP]")
+    if (a==pw):
+        print("WELCOME SIR ! PLZ SPEAK [WAKE UP] TO LOAD ME UP")
         break
-    elif (i==2 & a != pw):
-        print("Incorrect password, Try again")
-        continue
-    elif(a!=pw):
-        print("Incorrect password, Try again")
-        continue
+    elif (i==2 and a!=pw):
+        exit()
+
+    elif (a!=pw):
+        print("Try Again")
+
 
 
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
-for voice in voices:
+for voice in voices:    
     if "zira" in voice.name.lower():
         engine.setProperty("voice", voice.id)
         break
@@ -179,9 +183,7 @@ if __name__ == "__main__":
                             from cricscore import cricscore
                             cricscore() 
                             
-
-
-
+                        
                             
                         elif "hello" in query:
                             speak("Hello sir, How can I help you?")

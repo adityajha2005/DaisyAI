@@ -72,10 +72,9 @@ while True:
             detailed_scores_split = detailed_scores.split(",")
             overs = detailed_scores_split[0].split(" ")[0].strip()
 
-            if previous_overs == -1:
-                previous_overs = int(float(overs))  # Initialize to the current value of overs
+            # if previous_overs == -1:
+            #     previous_overs = int(float(overs))  
 
-            # Convert overs to float to handle cases like "10.2"
             current_overs = int(float(overs))
 
             if current_overs != previous_overs:
@@ -97,3 +96,5 @@ while True:
         pass
 
     sleep(5)  # Wait for 5 seconds before polling again
+
+
