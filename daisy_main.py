@@ -186,7 +186,11 @@ if __name__ == "__main__":
                             from game import game_play
                             game_play()
                             
-                        
+                        elif "screenshot" in query:
+                            im = pyautogui.screenshot("screenshot.png")
+                            speak("Screenshot taken")
+                            im.save("ss.jpg")
+
                             
                         elif "hello" in query:
                             speak("Hello sir, How can I help you?")
