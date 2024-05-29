@@ -182,6 +182,9 @@ if __name__ == "__main__":
                         elif "cricket score" in query:
                             from cricscore import cricscore
                             cricscore() 
+                        elif "play a game" in query:
+                            from game import game_play
+                            game_play()
                             
                         
                             
